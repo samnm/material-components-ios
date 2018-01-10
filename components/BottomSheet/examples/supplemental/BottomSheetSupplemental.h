@@ -16,6 +16,9 @@
 
 #import "BottomSheetPresenterViewController.h"
 
+@interface BottomSheetAnimationSyncExample : BottomSheetPresenterViewController
+@end
+
 @interface BottomSheetAutolayoutExample : BottomSheetPresenterViewController
 @end
 

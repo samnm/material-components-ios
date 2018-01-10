@@ -15,7 +15,26 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <MotionAnimator/MotionAnimator.h>
 #import <MotionTransitioning/MotionTransitioning.h>
+
+@protocol MDCBottomSheetTransitionAnimationDelegate <NSObject>
+
+@optional
+
+- (void)animateAlongsidePresentation:(NSTimeInterval)duration
+                            animator:(nonnull MDMMotionAnimator *)animator;
+
+- (void)animateAlongsideDismissal:(NSTimeInterval)duration
+                         animator:(nonnull MDMMotionAnimator *)animator;
+
+- (void)animateAlongsideStateTransitionFrom:(NSInteger)from
+                                         to:(NSInteger)to
+                                   animator:(nonnull MDMMotionAnimator *)animator;
+
+- (void)bottomSheetDidScroll:(nonnull UIScrollView *)scrollView;
+
+@end
 
 /**
  Presents the associated view controller as a draggable bottom view.
@@ -38,7 +57,7 @@
  order to dismiss itself when the user performs an accessibility escape gesture (two finger z
  gesture).
  */
-@interface MDCBottomSheetTransition : NSObject <MDMTransition>
+@interface MDCBottomSheetTransition : NSObject <MDMTransitionWithPresentation>
 
 /**
  Interactions with the tracking scroll view will affect the bottom sheet's drag behavior.
@@ -49,5 +68,8 @@
  Changes to this value will be ignored after the bottom sheet controller has been presented.
  */
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
+
+@property(nonatomic, weak, nullable)
+    id<MDCBottomSheetTransitionAnimationDelegate> animationDelegate;
 
 @end

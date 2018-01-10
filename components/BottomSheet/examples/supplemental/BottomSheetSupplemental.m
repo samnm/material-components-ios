@@ -16,6 +16,22 @@
 
 #import "BottomSheetSupplemental.h"
 
+@implementation BottomSheetAnimationSyncExample (CatalogByConvention)
+
++ (NSArray *)catalogBreadcrumbs {
+  return @[ @"Bottom Sheet", @"Animation Sync" ];
+}
+
++ (BOOL)catalogIsPrimaryDemo {
+  return NO;
+}
+
++ (BOOL)catalogIsPresentable {
+  return YES;
+}
+
+@end
+
 @implementation BottomSheetAutolayoutExample (CatalogByConvention)
 
 + (NSArray *)catalogBreadcrumbs {
