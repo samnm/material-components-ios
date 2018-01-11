@@ -32,8 +32,6 @@
                                          to:(NSInteger)to
                                    animator:(nonnull MDMMotionAnimator *)animator;
 
-- (void)bottomSheetDidScroll:(nonnull UIScrollView *)scrollView;
-
 @end
 
 /**

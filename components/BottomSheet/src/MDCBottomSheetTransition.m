@@ -18,9 +18,6 @@
 
 #import "MDCBottomSheetPresentationController.h"
 
-@interface MDCBottomSheetTransition (Private) <UICollectionViewDelegate>
-@end
-
 @implementation MDCBottomSheetTransition {
 // TODO( https://github.com/material-components/material-components-ios/issues/2418 ):
 // Remove once MDCBottomSheetPresentationController is private.
@@ -55,20 +52,12 @@
 
 - (void)setTrackingScrollView:(UIScrollView *)trackingScrollView {
   _trackingScrollView = trackingScrollView;
-  NSLog(@"_trackingScrollView.delegate: %@", _trackingScrollView.delegate);
-  _trackingScrollView.delegate = self;
 
   _presentationController.trackingScrollView = self.trackingScrollView;
 }
 
 - (UIModalPresentationStyle)defaultModalPresentationStyle {
   return UIModalPresentationCustom;
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  if ([self.animationDelegate respondsToSelector:@selector(bottomSheetDidScroll:)]) {
-    [self.animationDelegate bottomSheetDidScroll:scrollView];
-  }
 }
 
 @end

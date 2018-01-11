@@ -23,7 +23,7 @@
 #import "supplemental/BottomSheetSupplemental.h"
 
 @interface BottomSheetAnimationSyncExample (AnimationDelegate)
-    <MDCBottomSheetTransitionAnimationDelegate>
+    <MDCBottomSheetTransitionAnimationDelegate, UICollectionViewDelegate>
 @end
 
 @implementation BottomSheetAnimationSyncExample
@@ -31,6 +31,7 @@
 - (void)presentBottomSheet {
   BottomSheetDummyCollectionViewController *viewController =
       [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:100];
+  viewController.collectionView.delegate = self;
 
   MDCBottomSheetTransition *transition = [[MDCBottomSheetTransition alloc] init];
   transition.animationDelegate = self;
@@ -46,7 +47,7 @@
   // MDCBottomSheetTransition -> MDCBottomSheetPresentationController -> MDCSheetContainerView
 }
 
-- (void)bottomSheetDidScroll:(UIScrollView *)scrollView {
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   NSLog(@"Scrolled %.2f", scrollView.contentOffset.y);
 }
 
