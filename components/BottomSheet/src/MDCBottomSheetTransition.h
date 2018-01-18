@@ -18,19 +18,14 @@
 #import <MotionAnimator/MotionAnimator.h>
 #import <MotionTransitioning/MotionTransitioning.h>
 
+@class MDCBottomSheetTransition;
+
 @protocol MDCBottomSheetTransitionAnimationDelegate <NSObject>
 
-@optional
-
-- (void)animateAlongsidePresentation:(NSTimeInterval)duration
-                            animator:(nonnull MDMMotionAnimator *)animator;
-
-- (void)animateAlongsideDismissal:(NSTimeInterval)duration
-                         animator:(nonnull MDMMotionAnimator *)animator;
-
-- (void)animateAlongsideStateTransitionFrom:(NSInteger)from
-                                         to:(NSInteger)to
-                                   animator:(nonnull MDMMotionAnimator *)animator;
+- (void)bottomSheetTransition:(nonnull MDCBottomSheetTransition *)transition
+                syncAnimation:(nonnull MDMMotionAnimator *)animator
+                   presenting:(BOOL)presenting
+                     duration:(CGFloat)duration;
 
 @end
 

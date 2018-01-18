@@ -208,6 +208,16 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
                    withValues:@[@0, @1]
                       keyPath:MDMKeyPathOpacity];
 
+  id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:@selector(
+        bottomSheetPresentationController:syncAnimationForTransition:presenting:duration:)]) {
+    BOOL presenting = context.direction == MDMTransitionDirectionForward;
+    [strongDelegate bottomSheetPresentationController:self
+                           syncAnimationForTransition:animator
+                                           presenting:presenting
+                                             duration:spec.duration];
+  }
+
   [CATransaction commit];
 
   // We want the transition to give control back to the user ASAP, so we don't include the sheet's

@@ -18,6 +18,12 @@
 
 #import "MDCBottomSheetPresentationController.h"
 
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+@interface MDCBottomSheetTransition  (Private) <MDCBottomSheetPresentationControllerDelegate>
+#pragma clang diagnostic pop
+@end
+
 @implementation MDCBottomSheetTransition {
 // TODO( https://github.com/material-components/material-components-ios/issues/2418 ):
 // Remove once MDCBottomSheetPresentationController is private.
@@ -44,6 +50,7 @@
   MDCBottomSheetPresentationController *presentationController =
       [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
                                                            presentingViewController:presenting];
+  presentationController.delegate = self;
   _presentationController = presentationController;
 #pragma clang diagnostic pop
   presentationController.trackingScrollView = self.trackingScrollView;
@@ -58,6 +65,21 @@
 
 - (UIModalPresentationStyle)defaultModalPresentationStyle {
   return UIModalPresentationCustom;
+}
+
+#pragma mark - MDCBottomSheetPresentationControllerDelegate
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+- (void)bottomSheetPresentationController:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+               syncAnimationForTransition:(nonnull MDMMotionAnimator *)animator
+                               presenting:(BOOL)presenting
+                                 duration:(CGFloat)duration {
+#pragma clang diagnostic pop
+  [self.animationDelegate bottomSheetTransition:self
+                                  syncAnimation:animator
+                                     presenting:presenting
+                                       duration:duration];
 }
 
 @end

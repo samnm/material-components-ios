@@ -17,6 +17,7 @@
 #import <UIKit/UIKit.h>
 
 @class MDCBottomSheetPresentationController;
+@class MDMMotionAnimator;
 
 /**
  Delegate for MDCBottomSheetPresentationController.
@@ -43,6 +44,11 @@ __deprecated_msg("This API will soon be made private. Use MDCBottomSheetControll
  */
 - (void)bottomSheetPresentationControllerDidDismissBottomSheet:
     (nonnull MDCBottomSheetPresentationController *)bottomSheet;
+
+- (void)bottomSheetPresentationController:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+               syncAnimationForTransition:(nonnull MDMMotionAnimator *)animator
+                               presenting:(BOOL)presenting
+                                 duration:(CGFloat)duration;
 
 @end
 

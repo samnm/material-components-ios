@@ -34,8 +34,8 @@
   viewController.collectionView.delegate = self;
 
   MDCBottomSheetTransition *transition = [[MDCBottomSheetTransition alloc] init];
-  transition.animationDelegate = self;
   transition.trackingScrollView = viewController.collectionView;
+  transition.animationDelegate = self;
 
   viewController.mdm_transitionController.transition = transition;
   [self presentViewController:viewController animated:YES completion:nil];
@@ -49,6 +49,13 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
   NSLog(@"Scrolled %.2f", scrollView.contentOffset.y);
+}
+
+- (void)bottomSheetTransition:(MDCBottomSheetTransition *)transition
+                syncAnimation:(MDMMotionAnimator *)animator
+                   presenting:(BOOL)presenting
+                     duration:(CGFloat)duration {
+  NSLog(@"Transition to %@ over %.2f seconds", presenting ? @"presented" : @"dismissed", duration);
 }
 
 @end
