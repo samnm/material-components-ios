@@ -39,12 +39,6 @@
 
   viewController.mdm_transitionController.transition = transition;
   [self presentViewController:viewController animated:YES completion:nil];
-
-  // Sync presentation/dismissal
-  // MDCBottomSheetTransition -> MDCBottomSheetPresentationController -> startWithContext
-
-  // Sync changing between half-height and full-height
-  // MDCBottomSheetTransition -> MDCBottomSheetPresentationController -> MDCSheetContainerView
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
