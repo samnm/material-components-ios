@@ -16,6 +16,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class MDMMotionAnimator;
+
 @protocol MDCSheetContainerViewDelegate;
 
 typedef NS_ENUM(NSUInteger, MDCSheetState) {
@@ -43,5 +45,11 @@ typedef NS_ENUM(NSUInteger, MDCSheetState) {
 @protocol MDCSheetContainerViewDelegate <NSObject>
 
 - (void)sheetContainerViewWillHide:(nonnull MDCSheetContainerView *)containerView;
+
+- (void)sheetContainerView:(nonnull MDCSheetContainerView *)sheetContainer
+syncAnimationForTransition:(nonnull MDMMotionAnimator *)animator
+                      from:(MDCSheetState)from
+                        to:(MDCSheetState)to
+                  duration:(CGFloat)duration;
 
 @end

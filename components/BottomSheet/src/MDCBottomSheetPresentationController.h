@@ -19,6 +19,12 @@
 @class MDCBottomSheetPresentationController;
 @class MDMMotionAnimator;
 
+typedef NS_ENUM(NSUInteger, MDCBottomSheetState) {
+  MDCBottomSheetStateClosed,
+  MDCBottomSheetStatePreferred,
+  MDCBottomSheetStateExtended
+};
+
 /**
  Delegate for MDCBottomSheetPresentationController.
  */
@@ -48,6 +54,12 @@ __deprecated_msg("This API will soon be made private. Use MDCBottomSheetControll
 - (void)bottomSheetPresentationController:(nonnull MDCBottomSheetPresentationController *)bottomSheet
                syncAnimationForTransition:(nonnull MDMMotionAnimator *)animator
                                presenting:(BOOL)presenting
+                                 duration:(CGFloat)duration;
+
+- (void)bottomSheetPresentationController:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+              syncAnimationForStateChange:(nonnull MDMMotionAnimator *)animator
+                                     from:(MDCBottomSheetState)from
+                                       to:(MDCBottomSheetState)to
                                  duration:(CGFloat)duration;
 
 @end

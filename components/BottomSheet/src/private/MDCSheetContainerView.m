@@ -240,6 +240,7 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
 }
 
 - (void)animateToSheetState:(MDCSheetState)sheetState withInitialVelocity:(CGPoint)initialVelocity {
+  MDCSheetState prevState = _sheetState;
   _sheetState = sheetState;
 
   if (self.window) {
@@ -250,6 +251,14 @@ static const CGFloat kSheetBounceBuffer = 150.0f;
     [self.animator animateWithTiming:spec animations:^{
       self.sheet.layer.position = [self targetPointForState:sheetState];
     }];
+
+    if (prevState != sheetState) {
+      [self.delegate sheetContainerView:self
+             syncAnimationForTransition:self.animator
+                                   from:prevState
+                                     to:sheetState
+                               duration:spec.duration];
+    }
   }
 }
 

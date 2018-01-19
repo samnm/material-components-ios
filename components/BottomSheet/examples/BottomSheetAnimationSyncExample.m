@@ -23,7 +23,7 @@
 #import "supplemental/BottomSheetSupplemental.h"
 
 @interface BottomSheetAnimationSyncExample (AnimationDelegate)
-    <MDCBottomSheetTransitionAnimationDelegate, UICollectionViewDelegate>
+    <MDCBottomSheetPresentationControllerDelegate, UICollectionViewDelegate>
 @end
 
 @implementation BottomSheetAnimationSyncExample
@@ -35,7 +35,7 @@
 
   MDCBottomSheetTransition *transition = [[MDCBottomSheetTransition alloc] init];
   transition.trackingScrollView = viewController.collectionView;
-  transition.animationDelegate = self;
+  transition.bottomSheetPresentationDelegate = self;
 
   viewController.mdm_transitionController.transition = transition;
   [self presentViewController:viewController animated:YES completion:nil];
@@ -56,6 +56,14 @@
                    presenting:(BOOL)presenting
                      duration:(CGFloat)duration {
   NSLog(@"Transition to %@ over %.2f seconds", presenting ? @"presented" : @"dismissed", duration);
+}
+
+- (void)bottomSheetPresentationController:(MDCBottomSheetPresentationController *)bottomSheet
+              syncAnimationForStateChange:(MDMMotionAnimator *)animator
+                                     from:(MDCBottomSheetState)from
+                                       to:(MDCBottomSheetState)to
+                                 duration:(CGFloat)duration {
+  NSLog(@"Transition from %lud to %lud over %.2f seconds", (unsigned long)from, (unsigned long)to, duration);
 }
 
 @end

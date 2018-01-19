@@ -50,7 +50,7 @@
   MDCBottomSheetPresentationController *presentationController =
       [[MDCBottomSheetPresentationController alloc] initWithPresentedViewController:presented
                                                            presentingViewController:presenting];
-  presentationController.delegate = self;
+  presentationController.delegate = self.bottomSheetPresentationDelegate;
   _presentationController = presentationController;
 #pragma clang diagnostic pop
   presentationController.trackingScrollView = self.trackingScrollView;
@@ -65,21 +65,6 @@
 
 - (UIModalPresentationStyle)defaultModalPresentationStyle {
   return UIModalPresentationCustom;
-}
-
-#pragma mark - MDCBottomSheetPresentationControllerDelegate
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (void)bottomSheetPresentationController:(nonnull MDCBottomSheetPresentationController *)bottomSheet
-               syncAnimationForTransition:(nonnull MDMMotionAnimator *)animator
-                               presenting:(BOOL)presenting
-                                 duration:(CGFloat)duration {
-#pragma clang diagnostic pop
-  [self.animationDelegate bottomSheetTransition:self
-                                  syncAnimation:animator
-                                     presenting:presenting
-                                       duration:duration];
 }
 
 @end

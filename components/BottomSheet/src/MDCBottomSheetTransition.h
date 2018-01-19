@@ -18,16 +18,7 @@
 #import <MotionAnimator/MotionAnimator.h>
 #import <MotionTransitioning/MotionTransitioning.h>
 
-@class MDCBottomSheetTransition;
-
-@protocol MDCBottomSheetTransitionAnimationDelegate <NSObject>
-
-- (void)bottomSheetTransition:(nonnull MDCBottomSheetTransition *)transition
-                syncAnimation:(nonnull MDMMotionAnimator *)animator
-                   presenting:(BOOL)presenting
-                     duration:(CGFloat)duration;
-
-@end
+@protocol MDCBottomSheetPresentationControllerDelegate;
 
 /**
  Presents the associated view controller as a draggable bottom view.
@@ -63,6 +54,6 @@
 @property(nonatomic, weak, nullable) UIScrollView *trackingScrollView;
 
 @property(nonatomic, weak, nullable)
-    id<MDCBottomSheetTransitionAnimationDelegate> animationDelegate;
+    id<MDCBottomSheetPresentationControllerDelegate> bottomSheetPresentationDelegate;
 
 @end

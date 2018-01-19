@@ -242,5 +242,21 @@ static UIScrollView *MDCBottomSheetGetPrimaryScrollView(UIViewController *viewCo
   }
 }
 
+- (void)sheetContainerView:(MDCSheetContainerView *)sheetContainer
+syncAnimationForTransition:(MDMMotionAnimator *)animator
+                      from:(MDCSheetState)from
+                        to:(MDCSheetState)to
+                  duration:(CGFloat)duration {
+  id<MDCBottomSheetPresentationControllerDelegate> strongDelegate = self.delegate;
+  if ([strongDelegate respondsToSelector:
+      @selector(bottomSheetPresentationController:syncAnimationForStateChange:from:to:duration:)]) {
+    [strongDelegate bottomSheetPresentationController:self
+                          syncAnimationForStateChange:animator
+                                                 from:(MDCBottomSheetState)from
+                                                   to:(MDCBottomSheetState)to
+                                             duration:duration];
+  }
+}
+
 @end
 
