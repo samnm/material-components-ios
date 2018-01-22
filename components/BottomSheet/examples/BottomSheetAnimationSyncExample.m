@@ -19,6 +19,7 @@
 #import <MotionTransitioning/MotionTransitioning.h>
 
 #import "MaterialBottomSheet.h"
+#import "MaterialProgressView.h"
 #import "supplemental/BottomSheetDummyCollectionViewController.h"
 #import "supplemental/BottomSheetSupplemental.h"
 
@@ -26,12 +27,26 @@
     <MDCBottomSheetPresentationControllerDelegate, UICollectionViewDelegate>
 @end
 
-@implementation BottomSheetAnimationSyncExample
+@implementation BottomSheetAnimationSyncExample {
+  MDCProgressView *_presentationProgressView;
+  MDCProgressView *_stateProgressView;
+  MDCProgressView *_scrollProgressView;
+}
 
 - (void)presentBottomSheet {
+
   BottomSheetDummyCollectionViewController *viewController =
       [[BottomSheetDummyCollectionViewController alloc] initWithNumItems:100];
   viewController.collectionView.delegate = self;
+
+  _presentationProgressView = [[MDCProgressView alloc] initWithFrame:CGRectMake(100, 100, 200, 20)];
+  [viewController.view addSubview:_presentationProgressView];
+
+  _stateProgressView = [[MDCProgressView alloc] initWithFrame:CGRectMake(100, 130, 200, 20)];
+  [viewController.view addSubview:_stateProgressView];
+
+  _scrollProgressView = [[MDCProgressView alloc] initWithFrame:CGRectMake(100, 160, 200, 20)];
+  [viewController.view addSubview:_scrollProgressView];
 
   MDCBottomSheetTransition *transition = [[MDCBottomSheetTransition alloc] init];
   transition.trackingScrollView = viewController.collectionView;
@@ -42,14 +57,18 @@
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  NSLog(@"Scrolled %.2f", scrollView.contentOffset.y);
+  CGFloat scrollHeight = scrollView.contentSize.height - scrollView.frame.size.height;
+  scrollHeight = MAX(1.0f, scrollHeight);
+
+  _scrollProgressView.progress = (float)(scrollView.contentOffset.y / scrollHeight);
 }
 
-- (void)bottomSheetTransition:(MDCBottomSheetTransition *)transition
-                syncAnimation:(MDMMotionAnimator *)animator
-                   presenting:(BOOL)presenting
-                     duration:(CGFloat)duration {
+- (void)bottomSheetPresentationController:(nonnull MDCBottomSheetPresentationController *)bottomSheet
+               syncAnimationForTransition:(nonnull MDMMotionAnimator *)animator
+                               presenting:(BOOL)presenting
+                                 duration:(CGFloat)duration {
   NSLog(@"Transition to %@ over %.2f seconds", presenting ? @"presented" : @"dismissed", duration);
+  _presentationProgressView.progress = presenting ? 1.f : 0.f;
 }
 
 - (void)bottomSheetPresentationController:(MDCBottomSheetPresentationController *)bottomSheet
@@ -58,6 +77,7 @@
                                        to:(MDCBottomSheetState)to
                                  duration:(CGFloat)duration {
   NSLog(@"Transition from %lud to %lud over %.2f seconds", (unsigned long)from, (unsigned long)to, duration);
+  _stateProgressView.progress = to / 2.f;
 }
 
 @end
